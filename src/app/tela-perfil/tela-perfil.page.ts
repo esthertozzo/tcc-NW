@@ -17,7 +17,7 @@ export class TelaPerfilPage {
   @ViewChild(IonModal) modal!: IonModal;
   presentingElement: any;
   canDismiss = true;
-
+  nomeUsuario: string | null = null;
   fotoBase64: string | null = null;
   midias: File[] = [];
   previews: { type: 'foto' | 'video', url: string }[] = [];
@@ -36,12 +36,16 @@ export class TelaPerfilPage {
     return this.fotoBase64;
   }
 
-
 async editarPerfil() {
   const modal = await this.modalCtrl.create({
     component: EditarPerfilModalComponent,
   });
   await modal.present();
+
+  const { data } = await modal.onDidDismiss();
+  if(data?.nomeAtualizado){
+    this.nomeUsuario = data.nomeAtualizado
+  }
 }
 
 async politicas(){
@@ -131,9 +135,14 @@ async politicas(){
     input.click();
   }
 
-  ionViewWillEnter() {
-    this.presentingElement = document.querySelector('ion-content');
+ionViewWillEnter() {
+  this.presentingElement = document.querySelector('ion-content');
+
+  const usuario = this.authService.getUsuario();
+  if (usuario) {
+    this.nomeUsuario = usuario.nome;
   }
+}
 
   planos(){
     this.navCtrl.navigateForward('/tela-planos')

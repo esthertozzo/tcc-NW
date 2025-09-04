@@ -54,8 +54,8 @@ export class EditarPerfilModalComponent implements OnInit {
     this.fecharModal();
   }
 
-  fecharModal() {
-    this.modalCtrl.dismiss();
+  fecharModal(dadosAtualizados?: { nomeAtualizado?: string; emailAtualizado?: string }) {
+    this.modalCtrl.dismiss(dadosAtualizados || null);
   }
 
   async salvarAlteracoes() {
@@ -88,8 +88,17 @@ export class EditarPerfilModalComponent implements OnInit {
       };
 
       await this.profileService.updateProfile(payload).toPromise();
+
+       const usuario = this.authService.getUsuario();
+      if (usuario) {
+        const usuarioAtualizado = { ...usuario, nome: this.nome, email: this.email };
+        localStorage.setItem('usuarioLogado', JSON.stringify(usuarioAtualizado));
+        // Atualiza o BehaviorSubject para refletir no app inteiro
+        (this.authService as any)['usuarioLogadoSubject'].next(usuarioAtualizado);
+      }
+
       await this.showToast('Perfil atualizado com sucesso!', 'success');
-      this.fecharModal();
+      this.fecharModal({nomeAtualizado: this.nome});
     } catch (error) {
       console.error(error);
       await this.showToast('Erro ao atualizar perfil.', 'danger');

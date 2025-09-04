@@ -1,0 +1,7 @@
+<ion-app>
+  <div *ngIf="showSplash" class="splash-custom">
+    <img src="/assets/icon/logoBS.svg" class="logo" />
+  </div>
+
+  <ion-router-outlet *ngIf="!showSplash"></ion-router-outlet>
+</ion-app>

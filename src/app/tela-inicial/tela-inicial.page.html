@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+</ion-header>
+<link rel="stylesheet" href="/src/global.scss">
+
+<ion-content [fullscreen]="true">
+
+  <body
+    class="bg-[url('/assets/icon/bgInit.svg')] bg-cover bg-center flex items-center justify-center">
+
+   <div class="h-screen flex items-end justify-center pb-20">
+
+  <div class="flex flex-col items-center gap-5">
+     <span class="text-lg text-neutral-300 uppercase tracking-widest">Bem-vindo(a) ao <span class="text-mediumPink font-bold">BeautyScan</span></span>
+    <h1 class="text-h1 font-semibold text-stone-200 text-center">
+      Descubra sua essência com <span class="text-mediumPink">inteligência</span>.
+    </h1>
+    <p class="text-neutral-300 font-light text-center px-16">Transforme dados em autoestima. Com precisão e elegância.</p>
+    <button type="button"
+      class="text-white bg-gradient-to-r from-mainRed to-mainWine hover:bg-gradient-to-br transition delay-150 duration-200 ease-in-out font-light text-[16px] rounded-full text-sm px-20 py-2.5 text-center me-2 mb-2 "
+      (click)="entrar()">Explorar</button>
+  </div>
+</div>
+
+
+  </body>
+
+
+</ion-content>

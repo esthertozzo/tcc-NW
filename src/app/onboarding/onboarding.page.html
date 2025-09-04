@@ -1,0 +1,66 @@
+   <body class="bg-gradient-to-r from-mainRed to-mainWine flex flex-col">
+  <!-- Skip no topo -->
+  <div class="flex justify-end px-4 pt-6">
+    <button (click)="pular()" class="text-md font-medium text-gray-300 hover:underline">
+      Pular
+    </button>
+  </div>
+
+  <!-- Carrossel -->
+  <div
+    #carousel
+    class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth px-2 mt-36 h-full no-scrollbar"
+    (scroll)="onScroll()"
+    style="scrollbar-width: none;"
+  >
+    <div
+      *ngFor="let slide of slides; let i = index"
+      class="min-w-full snap-center  flex flex-col items-center text-center"
+    >
+      <!-- Ilustração / ícone -->
+      <div class="w-40 h-40 mb-6 flex items-center justify-center bg-gradient-to-r from-mainRed to-mainWine rounded-full">
+        <img [src]="slide.image" alt="{{slide.title}}" class="w-24 h-24 object-contain" />
+      </div>
+      <h2 class="text-h2 font-bold text-bg mb-2">{{ slide.title }}</h2>
+      <p class="text-md text-neutral-100 px-6">{{ slide.description }}</p>
+    </div>
+  </div>
+
+  <!-- Indicadores -->
+  <div class="flex justify-center gap-2 mt-2">
+    <span
+      *ngFor="let _ of slides; let idx = index"
+      [ngClass]="{
+        'w-6 h-2 rounded-full bg-mainGray': currentIndex === idx,
+        'w-2 h-2 rounded-md bg-gray-300': currentIndex !== idx
+      }"
+      class="transition-all duration-200"
+    ></span>
+  </div>
+
+  <!-- Controles -->
+  <div class="mt-auto px-6 pb-12">
+    <div *ngIf="!isLast()" class="flex justify-between items-center">
+      <button (click)="voltar()" class="text-sm font-medium text-gray-200" [disabled]="currentIndex === 0">
+        Voltar
+      </button>
+      <button
+        (click)="proximo()"
+        class="bg-gradient-to-r from-mainRed to-mainWine text-white px-6 pt-2 pb-1 rounded-full shadow"
+      >
+        <ion-icon class="text-h3" name="arrow-forward-outline"></ion-icon>
+      </button>
+    </div>
+    <div *ngIf="isLast()" class="flex flex-col gap-1 items-center">
+      <button
+        (click)="comecar()"
+        class="w-full bg-mainRed text-white font-medium px-6 py-3 mt-5 rounded-full shadow"
+      >
+        Começar agora
+      </button>
+      <!-- <button (click)="pular()" class="text-center text-sm text-neutral-300 underline">
+        Já tenho conta
+      </button> -->
+    </div>
+  </div>
+</body>

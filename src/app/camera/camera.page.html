@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <ion-button fill="clear" class="fechar-btn" (click)="fechar()">
+    <ion-icon name="close-outline"></ion-icon>
+  </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="camera-content">
+
+  <!-- Vídeo da câmera -->
+  <div class="video-wrapper">
+    <video #video autoplay playsinline muted></video>
+  </div>
+
+  <!-- Botão de captura -->
+  <button class="capture-button" (click)="capturarImagem()"></button>
+
+<!-- Imagem capturada (pré-visualização) -->
+<div class="preview-wrapper" *ngIf="imagemCapturada">
+  <img [src]="imagemCapturada" alt="Imagem capturada" />
+  <ion-button color="success" expand="block" (click)="confirmarFoto()">
+    Usar essa imagem
+  </ion-button>
+  <ion-button fill="clear" color="medium" expand="block" (click)="descartarImagem()">
+    Tirar outra
+  </ion-button>
+</div>
+</ion-content>
+
+

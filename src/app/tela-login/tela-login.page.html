@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+</ion-header>
+<link rel="stylesheet" href="/src/global.scss">
+
+<ion-content [fullscreen]="true" class="overflow-y-auto">
+
+  <navbar></navbar>
+
+  <body class="bg-gradient-to-t from-mainRed to-mainWine min-h-screen flex flex-col overflow-y-auto">
+
+  <div class="pt-16 sm:pt-24 lg:pt-20 px-4 pb-8">
+    <h1 class="text-h2 font-semibold text-stone-200 text-center">
+      Entre para acessar seu histórico personalizado.
+    </h1>
+  </div>
+
+  <div class="flex-1 bg-mediumPink rounded-t-full px-8 flex flex-col justify-center items-center">
+
+    <div class="w-full max-w-md flex flex-col gap-6">
+
+      <h1 class="text-h2 font-bold text-mainWine text-center">Login</h1>
+
+      <input
+        type="email"
+        [(ngModel)]="email"
+        placeholder="Digite seu e-mail"
+        class="w-full px-4 py-4 rounded-full text-sm text-neutral-600 bg-lighterPink placeholder:text-neutral-500 border-0 shadow-lg shadow-pinkBrown mt-10 invalid:border-red-800 focus:border-lighterPink focus:outline focus:outline-lighterPink focus:invalid:border-red-800 focus:invalid:outline-red-800"
+      />
+
+      <input
+        type="password"
+        [(ngModel)]="senha"
+        placeholder="Digite sua senha"
+        class="w-full px-4 py-4 rounded-full text-sm text-neutral-600 bg-lighterPink placeholder:text-neutral-500 border-0 shadow-lg shadow-pinkBrown invalid:border-red-800 focus:border-lighterPink focus:outline focus:outline-lighterPink focus:invalid:border-red-800 focus:invalid:outline-red-800"
+      />
+
+      <button
+        type="button"
+        [disabled]="isLoading"
+        class="text-neutral-200 bg-gradient-to-r from-mainWine via-pinkBrown to-mainWine hover:bg-gradient-to-br font-light text-base rounded-full px-20 py-2.5 text-center disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="login()">
+        <ion-spinner *ngIf="isLoading" name="crescent" class="mr-2"></ion-spinner>
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
+      </button>
+
+      <p class="text-[14px] text-mainWine text-center pb-20">
+        Ainda não tem uma conta?
+        <a (click)="cadastro()" class="font-bold underline underline-offset-2 cursor-pointer">Cadastre-se</a>
+      </p>
+
+    </div>
+
+  </div>
+
+</body>
+
+</ion-content>

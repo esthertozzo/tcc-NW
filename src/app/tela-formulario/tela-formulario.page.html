@@ -1,0 +1,234 @@
+<ion-header [translucent]="true"> </ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <button (click)="voltar()">
+          <svg class="w-4 h-4 text-gray-200 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"/>
+</svg>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <body class="bg-bg min-h-screen flex flex-col overflow-y-auto">
+    <div class="px-6 pt-8">
+      <div class="w-full bg-neutral-200 rounded-full h-2 mb-6">
+        <div
+          class="bg-mainWine h-2 rounded-full transition-all duration-300"
+          [style.width]="getProgresso()"
+        ></div>
+      </div>
+    </div>
+
+    <div *ngIf="etapaAtual === 1">
+      <div class="pt-4 sm:pt-24 lg:pt-20 pb-8 px-4 grid gap-2">
+        <h1 class="text-h2 font-semibold text-stone-700 text-start">
+          Escolha suas preferências.
+        </h1>
+        <p class="text-neutral-500 text-sm text-start">
+          Selecione três opções para uma experiência mais personalizada.
+        </p>
+      </div>
+      <div class="mx-4 grid grid-cols-2 gap-4 md:grid-cols-3">
+        <button
+          *ngFor="let opcao of opcoes"
+          [ngClass]="{
+      'bg-pinkBrown text-white': preferencias.includes(opcao.nome),
+      'bg-lighterPink text-stone-900 opacity-50 cursor-not-allowed': !preferencias.includes(opcao.nome) && preferencias.length >= 3,
+      'bg-lighterPink text-mainWine': !preferencias.includes(opcao.nome) && preferencias.length < 3
+    }"
+          class="rounded-lg px-4 py-3 flex items-center gap-3 shadow-md transition-all duration-200 hover:scale-[1.02]"
+          (click)="selecionar(opcao.nome)"
+          [disabled]="!preferencias.includes(opcao.nome) && preferencias.length >= 3"
+        >
+          <img
+            [src]="opcao.imagem"
+            alt="ícone"
+            class="w-8 h-8 object-contain"
+          />
+          <span class="text-sm font-medium">{{ opcao.nome }}</span>
+        </button>
+      </div>
+
+      <div class="fixed bottom-[18%] left-0 right-0 py-4 px-6">
+        <button
+          class="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-mainWine via-pinkBrown to-mainWine hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-full px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="preferencias.length !== 3"
+          (click)="proximo()"
+        >
+          Avançar
+          <ion-icon
+            name="arrow-forward-circle-outline"
+            class="text-xl"
+          ></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="etapaAtual === 2">
+      <div class="pt-4 sm:pt-24 lg:pt-20 pb-8 px-4 grid gap-2">
+        <h1 class="text-h2 font-semibold text-stone-700 text-start">
+          Qual tipo de pele você mais se identifica?
+        </h1>
+        <p class="text-neutral-500 text-sm text-start">
+          Essa informação nos ajuda a oferecer recomendações mais eficazes.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4 px-8">
+        <button
+          *ngFor="let tipo of tiposDePele"
+          (click)="selecionarCampo('tipo', tipo)"
+          [ngClass]="{
+        'bg-pinkBrown text-white': pele.tipo === tipo,
+        'text-neutral-600 bg-lighterPink': pele.tipo !== tipo
+      }"
+          class="w-full rounded-full px-6 py-4 text-base font-medium shadow-md transition-all hover:scale-[1.02]"
+        >
+          {{ tipo }}
+        </button>
+
+        <!-- Botão que acompanha o scroll, aparece depois do conteúdo -->
+        <div class="mt-4 px-6 mb-40">
+          <button
+            class="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-mainWine via-pinkBrown to-mainWine hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-full px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            [disabled]="pele.tipo === ''"
+            (click)="proximo()"
+          >
+            Avançar
+            <ion-icon
+              name="arrow-forward-circle-outline"
+              class="text-xl"
+            ></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Etapa 3 -->
+    <div *ngIf="etapaAtual === 3" class="px-6 pb-36 flex flex-col gap-8">
+      <div class="pt-6">
+        <h2 class="text-h2 font-semibold text-stone-700 mb-2">
+          Qual é o seu tom de pele?
+        </h2>
+        <p class="text-neutral-500 text-sm">
+          Essa informação nos ajuda a recomendar os tons ideais para você.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <button
+          *ngFor="let t of tonsDePeleComCor"
+          (click)="selecionarCampo('tom', t.nome)"
+          [ngClass]="{
+        'bg-pinkBrown text-white': pele.tom === t.nome,
+        'text-neutral-600 bg-lighterPink': pele.tom !== t.nome
+      }"
+          class="w-full flex items-center gap-3 rounded-full px-6 py-4 text-base font-medium shadow-md transition-all hover:scale-[1.02]"
+        >
+          <span
+            class="w-5 h-5 rounded-full border border-neutral-400"
+            [ngStyle]="{ 'background-color': t.cor }"
+          ></span>
+          {{ t.nome }}
+        </button>
+      </div>
+      <div class="mt-4 px-6 mb-10">
+        <button
+          class="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-mainWine via-pinkBrown to-mainWine hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-full px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="pele.tom === ''"
+          (click)="proximo()"
+        >
+          Avançar
+          <ion-icon
+            name="arrow-forward-circle-outline"
+            class="text-xl"
+          ></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Etapa 4: Sensibilidade e Condições -->
+    <div *ngIf="etapaAtual === 4" class="px-6 pb-36 flex flex-col gap-8">
+      <!-- Sensibilidade -->
+      <div class="grid gap-4 mb-4">
+        <p class="text-stone-700 font-medium mb-2">Sua pele é sensível?</p>
+        <div class="flex gap-3 flex-wrap">
+          <button
+            *ngFor="let s of sensibilidades"
+            (click)="selecionarCampo('sensibilidade', s)"
+            [ngClass]="{
+    'bg-pinkBrown text-white': pele.sensibilidade === s,
+    'bg-lighterPink text-mainWine': pele.sensibilidade !== s
+  }"
+            class="rounded-full px-6 py-3 border text-sm font-medium transition-all duration-200 hover:scale-105 shadow-sm"
+          >
+            {{ s }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Condições -->
+      <div class="grid gap-2">
+        <p class="text-stone-700 font-medium mb-2">
+          Deseja considerar alguma condição da sua pele?
+        </p>
+        <p class="text-sm text-neutral-500">
+          Você pode escolher até 3 opções.
+        </p>
+        <div class="flex gap-3 flex-wrap">
+          <button
+            *ngFor="let c of condicoes"
+            (click)="toggleCondicao(c)"
+            [ngClass]="{
+    'bg-pinkBrown text-white': pele.condicoes.includes(c),
+    'bg-lighterPink text-stone-900 opacity-50 cursor-not-allowed': !pele.condicoes.includes(c) && pele.condicoes.length >= 3,
+    'bg-lighterPink text-mainWine': !pele.condicoes.includes(c) && pele.condicoes.length < 3
+  }"
+            class="rounded-full px-4 py-3 text-sm shadow-sm font-medium transition-all duration-200 hover:scale-[1.02]"
+            [disabled]="!pele.condicoes.includes(c) && pele.condicoes.length >= 3"
+          >
+            {{ c }}
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-4 px-6 mb-10">
+        <button
+          class="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-mainWine via-pinkBrown to-mainWine hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-full px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="pele.sensibilidade === '' || pele.condicoes.length === 0" (click)="modalPlano.present()"
+         
+        >
+          Salvar Informações
+        </button>
+      </div>
+
+      <ion-modal
+        #modalPlano
+         [canDismiss]="canDismiss"
+         [presentingElement]="presentingElement"
+        
+      >
+        <ng-template>
+          <ion-header translucent>
+            <ion-toolbar style="--border-width: 0">
+              <ion-title><h2 class="text-gray-200">Termos de Uso</h2></ion-title>
+             
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-content>
+            <body class="bg-bg p-4">
+              
+            <button class="mt-6 bg-pinkBrown text-white p-3 rounded-2xl shadow-md hover:scale-105 transition text-sm" (click)="entrar()">
+              Concordar e Continuar
+            </button>
+            </body>
+            
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </div>
+  </body>
+</ion-content>

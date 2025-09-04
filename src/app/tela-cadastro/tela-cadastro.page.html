@@ -1,0 +1,69 @@
+<ion-header [translucent]="true">
+</ion-header>
+<link rel="stylesheet" href="/src/global.scss">
+<navbar></navbar>
+
+<ion-content [fullscreen]="true" class="overflow-y-auto">
+
+  <ion-header collapse="condense">
+  </ion-header>
+
+  <body class="bg-gradient-to-t from-mainRed to-mainWine min-h-screen flex flex-col overflow-y-auto">
+
+    <div class="pt-16 sm:pt-24 lg:pt-20 px-4 pb-8">
+      <h1 class="text-h2 font-semibold text-stone-200 text-center">
+        Crie sua conta e descubra uma nova experiência.
+      </h1>
+    </div>
+
+    <div class="flex-1 bg-mediumPink rounded-t-full px-8 flex flex-col justify-center items-center">
+
+      <div class="w-full max-w-md flex flex-col gap-6">
+
+        <h1 class="text-h2 font-bold text-mainWine text-center pt-10">Cadastro</h1>
+
+        <input type="text" placeholder="Nome" [(ngModel)]="nome"
+          class="w-full px-4 py-4 rounded-full text-sm text-neutral-600 bg-lighterPink placeholder:text-neutral-500 border-0 shadow-lg shadow-pinkBrown mt-10 invalid:border-red-800 focus:border-lighterPink focus:outline focus:outline-lighterPink focus:invalid:border-red-800 focus:invalid:outline-red-800" />
+        <!-- [(ngModel)]="contato.nome" -->
+
+        <input type="email" placeholder="Email" [(ngModel)]="email"
+          class="w-full px-4 py-4 rounded-full text-sm text-neutral-600 bg-lighterPink placeholder:text-neutral-500 border-0 shadow-lg shadow-pinkBrown invalid:border-red-800 focus:border-lighterPink focus:outline focus:outline-lighterPink focus:invalid:border-red-800 focus:invalid:outline-red-800" />
+        <!-- [(ngModel)]="contato.email" -->
+
+        <input type="password" placeholder="Senha" [(ngModel)]="senha"
+          class="w-full px-4 py-4 rounded-full text-sm text-neutral-600 bg-lighterPink placeholder:text-neutral-500 border-0 shadow-lg shadow-pinkBrown invalid:border-red-800 focus:border-lighterPink focus:outline focus:outline-lighterPink focus:invalid:border-red-800 focus:invalid:outline-red-800" />
+<!-- [(ngModel)]="contato.senha" -->
+
+
+          <div class="w-full">
+            <label for="dataNascimento" class="block text-sm text-neutral-600 mb-2">Data de Nascimento:</label>
+
+            <div
+              class="w-full px-4 py-4 rounded-full text-sm text-neutral-600 bg-lighterPink border-0 shadow-lg shadow-pinkBrown">
+              <ion-datetime-button datetime="datetime" color="rosinha" expand="block"></ion-datetime-button>
+            </div>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" presentation="date" color="medium"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </div>
+
+          <button type="button"
+            class="text-neutral-200 bg-gradient-to-r from-mainWine via-pinkBrown to-mainWine hover:bg-gradient-to-br font-light text-base rounded-full px-20 py-2.5 text-center" (click)="cadastrar()">Cadastrar</button>
+
+
+
+
+          <p class="text-mainWine text-center pb-40">
+            Já é cadastrado?
+            <a class="font-bold underline underline-offset-2" (click)="login()">Login</a>
+          </p>
+
+      </div>
+
+    </div>
+
+  </body>
+</ion-content>

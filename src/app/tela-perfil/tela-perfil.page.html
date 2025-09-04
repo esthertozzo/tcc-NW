@@ -1,0 +1,241 @@
+<ion-header>
+  <ion-toolbar style="--border-width: 0">
+    <ion-buttons slot="start">
+      <button (click)="voltar()">
+        <svg
+          class="w-4 h-4 text-gray-200 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 8 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
+          />
+        </svg>
+      </button>
+    </ion-buttons>
+    <ion-title class="text-xl text-white">Meu Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="overflow-y-auto">
+  <div class="bg-gradient-to-l from-mediumPink to-mainWine flex flex-col">
+    <div
+      class="bg-gradient-to-l from-mediumPink to-mainWine h-32 relative z-10"
+    ></div>
+
+    <div
+      class="bg-bg px-8 pt-20 pb-40 rounded-t-[100px] relative z-20"
+    >
+      <!-- fazer com que o avatar da home seja o mesmo desse (para aparecer a mesma foto) -->
+      <div class="absolute -top-10 left-1/2 transform -translate-x-1/2">
+        <div
+          class="relative w-28 h-28 bg-mediumPink rounded-full border border-bg overflow-hidden"
+        >
+          <img
+            *ngIf="profilePhotoUrl as url"
+            [src]="url"
+            alt="Foto de perfil"
+            class="w-full h-full object-cover"
+          />
+          <svg
+            *ngIf="!profilePhotoUrl"
+            class="absolute w-[108%] h-[120%] text-lighterPink -left-1"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+        <button
+          (click)="abrirOpcoes()"
+          class="w-10 h-10 absolute -bottom-1 right-1 bg-mainWine p-[6px] rounded-full shadow-lg hover:scale-105 transition z-10"
+        >
+          <ion-icon name="camera" class="text-softPink text-xs"></ion-icon>
+        </button>
+      </div>
+
+      <div class="flex flex-col items-center mb-6 mt-6">
+        <h2 class="text-xl font-bold text-mainWine">Olá, Nome!</h2>
+        <p class="text-sm text-gray-500">alguma outra informacao de cadastro</p>
+
+        <button
+          class="mt-2 flex items-center gap-1 px-3 py-1 text-sm rounded-full bg-mainWine text-white hover:scale-105 transition z-10"
+        (click)="editarPerfil()">
+
+          <ion-icon name="create-outline" class="text-base"></ion-icon>
+          Editar Perfil
+        </button>
+      </div>
+
+      <!-- card com o Plano Atual -->
+      <div
+        class="bg-pinkBrown text-white p-4 rounded-2xl shadow-md mt-4 mb-6 cursor-pointer hover:scale-[1.02] transition"
+        id="modalPlanoTrigger"
+      >
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-sm font-semibold">Plano Atual</p>
+            <h3 class="text-lg font-bold">Beauty Free</h3>
+            <p class="text-xs opacity-80">Desde 25/07/2025</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="text-lg"></ion-icon>
+        </div>
+      </div>
+      <ion-modal
+        #modalPlano
+        trigger="modalPlanoTrigger"
+         [canDismiss]="canDismiss"
+         [presentingElement]="presentingElement"
+
+      >
+        <ng-template>
+          <ion-header translucent>
+            <ion-toolbar style="--border-width: 0">
+              <ion-title><h2 class="text-gray-200">Seu Plano</h2></ion-title>
+              <ion-buttons slot="end">
+                <button class="text-mainWine" (click)="modal.dismiss()">Fechar</button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-content>
+            <body class="bg-bg p-4">
+              <h2 class="text-mainWine font-bold text-xl mb-2">Beauty Free</h2>
+            <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700">
+              <li class="flex items-start gap-2">
+                <ion-icon name="checkmark-circle-outline" class="text-mainWine text-lg mt-[2px]"></ion-icon>
+                <span class="text-sm">Acesso ao BeautyScan 1x/dia</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <ion-icon name="checkmark-circle-outline" class="text-mainWine text-lg mt-[2px]"></ion-icon>
+                 <span class="text-sm">Recomendações básicas</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <ion-icon name="checkmark-circle-outline" class="text-mainWine text-lg mt-[2px]"></ion-icon>
+                <span class="text-sm">Acesso à Comunidade</span>
+                </li>
+              <li class="flex items-start gap-2 opacity-50 line-through">
+                <ion-icon name="checkmark-circle-outline" class="text-mainWine text-lg mt-[2px]"></ion-icon>
+                <span class="text-sm">Histórico de progresso</span>
+              </li>
+              <li class="flex items-start gap-2 opacity-50 line-through">
+                <ion-icon name="checkmark-circle-outline" class="text-mainWine text-lg mt-[2px]"></ion-icon>
+                <span class="text-sm">Diagnóstico avançado</span>
+              </li>
+            </ul>
+            <button class="mt-6 bg-pinkBrown text-white p-3 rounded-2xl shadow-md hover:scale-105 transition text-sm" (click)="planos()">
+              Ver todos os planos
+            </button>
+            </body>
+
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <div class="bg-gray-50 rounded-2xl p-4 shadow-md space-y-4">
+        <!-- Configurações -->
+        <!-- <div class="flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 transition">
+    <div class="flex items-center gap-2 text-mainWine">
+      <ion-icon name="moon-outline" class="text-lg"></ion-icon>
+      <span>Modo Escuro</span>
+    </div>
+    <ion-toggle slot="end" (ionChange)="toggleDarkMode($event)"></ion-toggle>
+  </div> -->
+
+        <div
+          class="flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+        >
+          <div class="flex items-center gap-2 text-mainWine">
+            <ion-icon name="key-outline" class="text-lg"></ion-icon>
+            <span>Alterar Senha</span>
+          </div>
+          <ion-icon
+            name="chevron-forward-outline"
+            class="text-gray-400"
+          ></ion-icon>
+        </div>
+
+        <div
+          class="flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+        >
+          <div class="flex items-center gap-2 text-mainWine">
+            <ion-icon name="phone-portrait-outline" class="text-lg"></ion-icon>
+            <span>Sobre o App</span>
+          </div>
+          <ion-icon
+            name="chevron-forward-outline"
+            class="text-gray-400"
+          ></ion-icon>
+        </div>
+
+        <div
+          class="flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+        >
+          <div class="flex items-center gap-2 text-mainWine">
+            <ion-icon name="document-text-outline" class="text-lg"></ion-icon>
+            <span>Termos e Condições</span>
+          </div>
+          <ion-icon
+            name="chevron-forward-outline"
+            class="text-gray-400"
+          ></ion-icon>
+        </div>
+
+        <div
+          class="flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+        >
+          <div class="flex items-center gap-2 text-mainWine">
+            <ion-icon
+              name="shield-checkmark-outline"
+              class="text-lg"
+            ></ion-icon>
+            <span>Políticas de Privacidade</span>
+          </div>
+          <ion-icon
+            name="chevron-forward-outline"
+            class="text-gray-400"
+          ></ion-icon>
+        </div>
+
+        <div
+          class="flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+        >
+          <div class="flex items-center gap-2 text-mainWine">
+            <ion-icon name="share-social-outline" class="text-lg"></ion-icon>
+            <span>Compartilhe o app</span>
+          </div>
+          <ion-icon
+            name="chevron-forward-outline"
+            class="text-gray-400"
+          ></ion-icon>
+        </div>
+
+        <!-- Botão de Logout -->
+        <div
+          class="flex justify-between items-center p-2 rounded-lg hover:bg-red-50 transition cursor-pointer border-t border-gray-200 pt-4"
+          (click)="logout()"
+        >
+          <div class="flex items-center gap-2 text-red-600">
+            <ion-icon name="log-out-outline" class="text-lg"></ion-icon>
+            <span class="font-medium">Sair da Conta</span>
+          </div>
+          <ion-icon
+            name="chevron-forward-outline"
+            class="text-red-400"
+          ></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

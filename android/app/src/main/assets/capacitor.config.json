@@ -1,0 +1,15 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "tcc",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 2000,
+			"backgroundColor": "#fff0f3",
+			"androidScaleType": "CENTER_INSIDE",
+			"iosContentMode": "ScaleAspectFit",
+			"showSpinner": false
+		}
+	}
+}

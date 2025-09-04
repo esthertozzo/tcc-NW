@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+<ion-button expand="block" (click)="abrirOpcoesMidia()">
+  Adicionar mídia
+</ion-button>
+
+<ion-grid>
+  <ion-row>
+    <ion-col size="6" *ngFor="let preview of previews">
+      
+      <ng-container *ngIf="preview.type === 'foto'; else videoPreview">
+        <img [src]="preview.url" style="width: 100%; border-radius: 10px;" />
+      </ng-container>
+      <ng-template #videoPreview>
+        <video [src]="preview.url" controls style="width: 100%; border-radius: 10px;"></video>
+      </ng-template>
+      
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-item lines="inset">
+  <ion-textarea
+    (ionInput)="onDescricaoChange($event)"
+    [(ngModel)]="descricao"
+    autoGrow="true"
+    inputmode="text"
+    placeholder="Digite algo legal..."
+    style="border-radius: 10px;"
+  ></ion-textarea>
+</ion-item><ion-note class="ion-text-end" style="display: block; margin-top: 5px;">
+  {{ descricao.length }}/2200
+</ion-note>
+
+  <ion-button expand="block" color="primary" (click)="publicar()">
+    Publicar
+  </ion-button>
+
+</ion-content>
+

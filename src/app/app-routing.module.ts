@@ -67,11 +67,6 @@ const routes: Routes = [
     path: 'camera',
     loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule),
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'editar-perfil',
-    loadChildren: () => import('./editar-perfil/editar-perfil.module').then( m => m.EditarPerfilPageModule),
-    canActivate: [AuthGuard]
   }
 ];
 

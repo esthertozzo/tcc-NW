@@ -1,9 +1,11 @@
 import { AuthService } from './../services/auth/auth.service';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { IonModal } from '@ionic/angular';
 import { CameraPage } from '../camera/camera.page';
+import { EditarPerfilModalComponent } from '../components/editar-perfil-modal/editar-perfil-modal.component';
+import { PoliticasModalComponent } from '../components/politicas-modal/politicas-modal.component';
 
 @Component({
   selector: 'app-tela-perfil',
@@ -27,11 +29,6 @@ export class TelaPerfilPage {
     private authService: AuthService
   ) {}
 
-  ngOnInit() {
-    const darkMode = localStorage.getItem('dark-mode') === 'true';
-    document.body.classList.toggle('dark', darkMode);
-  }
-
   get profilePhotoUrl(): string | null {
     if (this.previews.length > 0) {
       return this.previews[this.previews.length - 1].url;
@@ -39,6 +36,20 @@ export class TelaPerfilPage {
     return this.fotoBase64;
   }
 
+
+async editarPerfil() {
+  const modal = await this.modalCtrl.create({
+    component: EditarPerfilModalComponent,
+  });
+  await modal.present();
+}
+
+async politicas(){
+  const modal = await this.modalCtrl.create({
+    component: PoliticasModalComponent
+  });
+  await modal.present();
+}
   async abrirOpcoes() {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Selecionar foto de perfil',
@@ -130,10 +141,6 @@ export class TelaPerfilPage {
 
   logout() {
     this.authService.logout();
-  }
-
-  editarPerfil(){
-    this.navCtrl.navigateForward('/editar-perfil')
   }
 
   voltar() {

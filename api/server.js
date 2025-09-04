@@ -114,12 +114,6 @@ app.get('/', async(req,res)=>{
     res.sendFile(path.join(__dirname + '/../src/app/onboarding/onboarding.page.html'))
 })
 
-
-
-
-
-
-
 app.get('/tela-cadastro',async (req,res) => {
     res.sendFile(path.join(__dirname + '/../src/app/tela-cadastro/tela-cadastro.page.html'));
 })
@@ -127,9 +121,8 @@ app.get('/tela-cadastro',async (req,res) => {
     Os "/../" indica que está saindo da pasta "api-login".
 */
 
-
 app.post('/tela-cadastro', async (req, res) => {
-    const {nome, email, senha} = req.body;
+    const {nome, email, senha, data} = req.body;
 
     const client = new MongoClient(url,{
         useUnifiedTopology: true
@@ -152,6 +145,7 @@ app.post('/tela-cadastro', async (req, res) => {
                 nome: req.body.nome,
                 email: req.body.email,
                 senha: senhaCriptografada,
+                data: new Date(req.body.data)
             });
             res.status(201).json({
                 success: true,
@@ -304,7 +298,7 @@ app.post('/editar-perfil', protegerRota, async (req, res) => {
         const updateData = {};
         if (nome) updateData.nome = nome;
         if (email) updateData.email = email;
-        if (data) updateData.data = data;
+        if (data) updateData.data = new Date(data);
         if (preferencias) updateData.preferencias = preferencias;
         if (plano) updateData.plano = plano;
 

@@ -14,7 +14,8 @@ import { HttpClient } from '@angular/common/http';
 export class TelaCadastroPage implements OnInit {
   nome : string = '';
   email : string = '';
-  senha : string = ''
+  senha : string = '';
+  data: Date = new Date();
 
   constructor(private navCtrl: NavController, private auth: AuthService, private http: HttpClient) {}
   ngOnInit() {
@@ -28,11 +29,12 @@ export class TelaCadastroPage implements OnInit {
 
     console.log('Nome:', this.nome);
     console.log('Email:', this.email);
-    
+
     const usuario = {
       nome: this.nome.trim(),
       email: this.email.trim(),
-      senha: this.senha
+      senha: this.senha,
+      data: this.data
     };
 
     this.auth.cadastrar(usuario).subscribe({
